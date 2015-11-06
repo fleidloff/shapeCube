@@ -27,7 +27,7 @@ var lazyBaz = ts.lazyDef({a: newType},
         return a.a + a.b;
     });
 
-console.log(foo({a: "foo", b: 3, c: 1}, 4, 6));
+console.log(foo({a: "foo", b: 3, c: "1"}, 4, 6));
 console.log(lazyFoo("foo", 3, 4));
 console.log(bar({a: {a: 1, b: 2}}));
 console.log(baz({a: {a: 2, b: 2}}));
