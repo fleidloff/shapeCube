@@ -1,4 +1,4 @@
-var preconditions = require("preconditions").singleton();
+var types = require("./types");
 
 function checkFactory(types) {
     return function check(params) {
@@ -15,20 +15,21 @@ function checkFactory(types) {
 const ts = {
     def(types, func) {
         var check = checkFactory(types);
-        return params => {
+        return (params, ...rest) => {
             check(params);
-            return func(params);
+            return func(params, ...rest);
         };
     },
     lazyDef(types, func) {
         var func = this.def(types, func);
-        return function(/*...params*/) { // cannot use anonymous function here until spread is supported
-            var params = Array.prototype.slice.call(arguments);
+        return function(...params) {
             var map = {};
+            var lastIndex = 0;
             Object.keys(types).forEach((value, index) => {
                 map[value] = params[index];
+                lastIndex = index;
             });
-            return func(map);
+            return func(map, ...(params.splice(lastIndex + 1)));
         };
     },
     type(name, types) {
@@ -39,14 +40,7 @@ const ts = {
         return this.types[name];
     },
 
-    types: {
-        String(p) {
-            preconditions.shouldBeString(p);
-        },
-        Number(p) {
-            preconditions.shouldBeNumber(p);
-        }
-    }
+    types
 };
 
 module.exports = ts;
