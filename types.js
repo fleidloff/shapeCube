@@ -1,19 +1,17 @@
 var preconditions = require("preconditions").singleton();
 
 var types = {
-    String(p, key) {
-        preconditions.shouldBeString(p, `Variable ${key} must be String`);
+    String(p, m) {
+        preconditions.shouldBeString(p, m);
     },
-    Number(p, key) {
-        preconditions.shouldBeNumber(p, `Variable ${key} must be Number`);
+    Number(p, m) {
+        preconditions.shouldBeNumber(p, m);
     },
-    Any(p, key) {
-        preconditions.shouldBeDefined(p, `Variable ${key} must be Defined`);
+    Any(p, m) {
+        preconditions.shouldBeDefined(p, m);
     },
-    Check(checkFunction, m) {
-        return (p, key) => {
-            preconditions.checkArgument(checkFunction(p), m || `Variable ${key} is Illegal Argument`);
-        }
+    Check(a, m) {
+        preconditions.checkArgument(a, m);
     }
 };
 

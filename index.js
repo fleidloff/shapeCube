@@ -1,47 +1,34 @@
-const {def, type, types} = require("./ts");
+const ts = require("./ts");
+const assert = console.log;
 
-var newType = type("newType", {a: types.Number, b: types.Number});
+ts.config({
+    throwError: true
+});
 
-var foo = def({a: types.String, b: types.Number, c: types.Any},
-    ({a, b, c}, d, e) => {
-        return a + b + c + d + e;
-    });
-console.log(foo("foo", 3, "1", 4, 6));
-
-
-var bar = def({a: types.newType},
-    ({a}) => {
-        return a.a + a.b;
-    });
-console.log(bar({a: 1, b: 2}));
-
-
-var baz = def({a: newType},
-    ({a, b}) => {
-        return a.a + a.b;
-    });
-console.log(baz({a: 2, b: 2}));
-
-function smiley() {
-    return " =)";
+function foo({a, b, c, d, e=4}) {
+    ts.check({Number: a}, {Number: b}, {Number: c}, {Any: d});
+    return a + b + c + d + e;
 }
+assert(foo({a: 0, b: 1, c: 2, d: 3}) === 10);
 
-function barFunction(a) {
-    return "bar" + fooFunction(a);
+
+function bar(a, b) {
+    var err = ts.check({String: a, message: "a must be text"}, {String: b});
+    if (err) console.log(err);
+    return a + b;
 }
+assert(bar("1", "2") === "12");
 
-var fooFunction = def({a: types.String},
-    ({a}) => {
-        return a + smiley();
-    }
-);
 
-var obj = {smiley, bar: barFunction, fooFunction};
+function checkCheck(a) {
+    ts.check({Check: (a >=0 && a < 10)});
+    return a*10;
+}
+assert(checkCheck(1) === 10);
 
-console.log(obj.bar("-tender"));
-
-var check = def({a: types.Check(p => {return p >=0 && p < 10;}, "a must be between 0 and 9")},
-    ({a}) => {
-        return a*10;
-    });
-console.log(check(1));
+var newType = ts.type("newType", {a: ts.types.Number, b: ts.types.Number});
+function checkType(a) {
+    ts.check({newType: a, message: "new type is not built correctly"});
+    return a.a + a.b;
+}
+assert(checkType({a: 1, b: 2}) === 3);

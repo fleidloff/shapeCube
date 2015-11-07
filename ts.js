@@ -1,40 +1,54 @@
-var types = require("./types");
+const types = require("./types");
+let options = {
+    throwError: true
+};
 
-function checkFactory(checks) {
-    return params => {
-        params = params || {};
+function config(newOptions) {
+    options.throwError = newOptions.throwError
+}
+
+function check(...params) {
+    const errors = [];
+    params.forEach(param => {
+        Object
+            .keys(param)
+            .forEach(key => {
+                if (typeof types[key] === "function") {
+                    try {
+                        types[key](param[key], param.message);
+                    } catch (e) {
+                        if (options.throwError) {
+                            throw e;
+                        } else {
+                            errors.push(e);
+                        }
+                    }
+                }
+            });
+    });
+    return errors.length > 0 ? errors : null;
+}
+
+function buildChecker(checks) {
+    return (params = {}, m) => {
         Object
             .keys(checks)
             .forEach(key => {
-                checks[key](params[key], key);
+                checks[key](params[key], m);
             });
     };
 }
 
-function def(checks, cb) {
-    var check = checkFactory(checks);
-    return (...params) => {
-        var map = {};
-        var lastIndex = 0;
-        Object.keys(checks).forEach((value, index) => {
-            map[value] = params[index];
-            lastIndex = index;
-        });
-        check(map);
-        return cb(map, ...(params.splice(lastIndex + 1)));
-    };
-}
-
 function type(name, checks) {
-    var check = checkFactory(checks);
-    types[name] = p => {
-        check(p);
+    const checker = buildChecker(checks);
+    types[name] = (p, m) => {
+        checker(p, m);
     };
     return types[name];
 }
 
 const ts = {
-    def, type, types
+    check, type, types, config
 };
 
 module.exports = ts;
