@@ -1,34 +1,47 @@
-const ts = require("./ts");
+const {def, type, types} = require("./ts");
 
-var newType = ts.type("newType", {a: ts.types.Number, b: ts.types.Number});
+var newType = type("newType", {a: types.Number, b: types.Number});
 
-var foo = ts.def({a: ts.types.String, b: ts.types.Number, c: ts.types.Any},
+var foo = def({a: types.String, b: types.Number, c: types.Any},
     ({a, b, c}, d, e) => {
         return a + b + c + d + e;
     });
+console.log(foo("foo", 3, "1", 4, 6));
 
-var lazyFoo = ts.lazyDef({a: ts.types.String, b: ts.types.Number},
-  	({a, b}, c) => {
-        return a + b + c;
-    });
 
-var bar = ts.def({a: ts.types.newType},
+var bar = def({a: types.newType},
     ({a}) => {
         return a.a + a.b;
     });
+console.log(bar({a: 1, b: 2}));
 
-var baz = ts.def({a: newType},
+
+var baz = def({a: newType},
     ({a, b}) => {
         return a.a + a.b;
     });
+console.log(baz({a: 2, b: 2}));
 
-var lazyBaz = ts.lazyDef({a: newType},
+function smiley() {
+    return " =)";
+}
+
+function barFunction(a) {
+    return "bar" + fooFunction(a);
+}
+
+var fooFunction = def({a: types.String},
     ({a}) => {
-        return a.a + a.b;
-    });
+        return a + smiley();
+    }
+);
 
-console.log(foo({a: "foo", b: 3, c: "1"}, 4, 6));
-console.log(lazyFoo("foo", 3, 4));
-console.log(bar({a: {a: 1, b: 2}}));
-console.log(baz({a: {a: 2, b: 2}}));
-console.log(lazyBaz({a: 2, b: 2}));
+var obj = {smiley, bar: barFunction, fooFunction};
+
+console.log(obj.bar("-tender"));
+
+var check = def({a: types.Check(p => {return p >=0 && p < 10;}, "a must be between 0 and 9")},
+    ({a}) => {
+        return a*10;
+    });
+console.log(check(-1));
