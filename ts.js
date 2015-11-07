@@ -8,20 +8,11 @@ function checkFactory(checks) {
             .forEach(key => {
                 checks[key](params[key], key);
             });
-
     };
 }
 
-function defFunction(checks, func) {
+function def(checks, cb) {
     var check = checkFactory(checks);
-    return (params, ...rest) => {
-        check(params);
-        return func(params, ...rest);
-    };
-}
-
-function def(checks, f) {
-    var func = defFunction(checks, f);
     return (...params) => {
         var map = {};
         var lastIndex = 0;
@@ -29,7 +20,8 @@ function def(checks, f) {
             map[value] = params[index];
             lastIndex = index;
         });
-        return func(map, ...(params.splice(lastIndex + 1)));
+        check(map);
+        return cb(map, ...(params.splice(lastIndex + 1)));
     };
 }
 

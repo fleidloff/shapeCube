@@ -5,10 +5,10 @@ var types = {
         preconditions.shouldBeString(p, `Variable ${key} must be String`);
     },
     Number(p, key) {
-        preconditions.shouldBeNumber(p, `Variable ${key} must be String`);
+        preconditions.shouldBeNumber(p, `Variable ${key} must be Number`);
     },
     Any(p, key) {
-        preconditions.shouldBeDefined(p, `Variable ${key} must be String`);
+        preconditions.shouldBeDefined(p, `Variable ${key} must be Defined`);
     },
     Check(checkFunction, m) {
         return (p, key) => {

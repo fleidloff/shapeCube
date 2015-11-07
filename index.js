@@ -44,4 +44,4 @@ var check = def({a: types.Check(p => {return p >=0 && p < 10;}, "a must be betwe
     ({a}) => {
         return a*10;
     });
-console.log(check(-1));
+console.log(check(1));
