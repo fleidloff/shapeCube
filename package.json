@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node --presets es2015 index.js"
+    "start": "babel-node --presets es2015 index.js",
+    "test": "babel-node --presets es2015 speedTest.js"
   },
   "author": "Frederik Leidloff <fleidloff@team.mobile.de>",
   "license": "ISC",
