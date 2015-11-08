@@ -1,18 +1,26 @@
 var preconditions = require("preconditions").singleton();
 
 var types = {
-    String(p, m) {
-        preconditions.shouldBeString(p, m);
-    },
-    Number(p, m) {
-        preconditions.shouldBeNumber(p, m);
-    },
     Any(p, m) {
         preconditions.shouldBeDefined(p, m);
     },
     Check(a, m) {
         preconditions.checkArgument(a, m);
+    },
+    TypedArray(p, m, type) {
+        preconditions.shouldBeArray(p, m);
+        preconditions.shouldBeFunction(type, "TypeArray requires a type param.");
+        p.forEach(it => {
+            type(it);
+        });
     }
 };
+
+const standardTypes = ["String", "Number", "Boolean", "Function", "Date", "Object", "Array"];
+standardTypes.forEach(type => {
+    types[type] = (p, m) => {
+        preconditions[`shouldBe${type}`](p, m);
+    }
+});
 
 module.exports = types;

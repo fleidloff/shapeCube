@@ -5,11 +5,11 @@ ts.config({
     throwError: true
 });
 
-function foo({a, b, c, d, e=4}) {
-    ts.check({Number: a}, {Number: b}, {Number: c}, {Any: d});
+function foo({a, b, c, d, e=4, f}) {
+    ts.check({Number: a, message: "a must be Number"}, {Number: b}, {Number: c}, {Any: d}, {Boolean: f});
     return a + b + c + d + e;
 }
-assert(foo({a: 0, b: 1, c: 2, d: 3}) === 10);
+assert(foo({a: 0, b: 1, c: 2, d: 3, f: true}) === 10);
 
 
 function bar(a, b) {
@@ -32,3 +32,16 @@ function checkType(a) {
     return a.a + a.b;
 }
 assert(checkType({a: 1, b: 2}) === 3);
+
+
+function checkArray(a) {
+    ts.check({Array: a});
+    return a.join("-");
+}
+assert(checkArray([1, 2, 3]) === "1-2-3");
+
+function checkTypedArray(a) {
+    ts.check({TypedArray: a, type: ts.types.Number});
+    return a.join("-");
+}
+assert(checkTypedArray([1, 2, 3]) === "1-2-3");

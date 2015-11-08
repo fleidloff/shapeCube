@@ -15,7 +15,7 @@ function check(...params) {
             .forEach(key => {
                 if (typeof types[key] === "function") {
                     try {
-                        types[key](param[key], param.message);
+                        types[key](param[key], param.message, param.type);
                     } catch (e) {
                         if (options.throwError) {
                             throw e;
