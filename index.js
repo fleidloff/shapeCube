@@ -1,4 +1,4 @@
-const ts = require("./ts");
+const ts = require("./" + require("./package.json").main);
 const assert = console.log;
 
 ts.config({
