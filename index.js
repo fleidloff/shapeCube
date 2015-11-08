@@ -2,7 +2,7 @@ const ts = require("./ts");
 const assert = console.log;
 
 ts.config({
-    throwError: true
+    throwError: false
 });
 
 function foo({a, b, c, d, e=4, f}) {
@@ -28,7 +28,7 @@ assert(checkCheck(1) === 10);
 
 var newType = ts.type("newType", {a: ts.types.Number, b: ts.types.Number});
 function checkType(a) {
-    ts.check({newType: a, message: "new type is not built correctly"});
+    var e = ts.check({newType: a, message: "new type is not built correctly"});
     return a.a + a.b;
 }
 assert(checkType({a: 1, b: 2}) === 3);

@@ -42,7 +42,7 @@ function buildChecker(checks) {
 function type(name, checks) {
     const checker = buildChecker(checks);
     types[name] = (p, m) => {
-        checker(p, m);
+        return checker(p, m);
     };
     return types[name];
 }
