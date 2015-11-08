@@ -2,7 +2,7 @@ const ts = require("./ts");
 const assert = console.log;
 
 ts.config({
-    throwError: false
+    throwError: true
 });
 
 function foo({a, b, c, d, e=4, f}) {
