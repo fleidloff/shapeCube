@@ -1,9 +1,10 @@
-// function two is slower by factor 1000!
-// Function #1: 15ms
-// Function #2: 13493ms
+var preconditions = require("preconditions").singleton();
+// Function #1: 34ms
+// Function #2: 10398ms
+// Function #3: 11016ms
 
 
-const ts = require("./ts");
+const ts = require("./src/ts");
 
 var iterations = 10000000;
 console.time('init');
@@ -21,6 +22,12 @@ for(var i = 0; i < iterations; i++ ){
 };
 console.timeEnd('Function #2');
 
+console.time('Function #3');
+for(var i = 0; i < iterations; i++ ){
+    three(i);
+};
+console.timeEnd('Function #3');
+
 function one(i) {
     var a = add(3, i);
 }
@@ -35,5 +42,15 @@ function two(i) {
 
 function add2(a, b) {
     ts.check({Number: a}, {Number: b});
+    return a + b;
+}
+
+function three(i) {
+    var a = add2(3, i);
+}
+
+function add3(a, b) {
+    preconditions.shouldBeNumber(a);
+    preconditions.shouldBeNumber(b);
     return a + b;
 }
