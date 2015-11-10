@@ -26,7 +26,7 @@ function checkCheck(a) {
 }
 assert(checkCheck(1) === 10);
 
-var newType = ts.type("newType", {a: ts.types.Number, b: ts.types.Number});
+var newType = ts.createType("newType", {a: ts.types.Number, b: ts.types.Number});
 function checkType(a) {
     var e = ts.check({newType: a, message: "new type is not built correctly"});
     return a.a + a.b;
