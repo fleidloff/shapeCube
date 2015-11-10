@@ -29,7 +29,7 @@ function check(...params) {
 
 module.exports = {
     check,
-    type: createType,
+    createType,
     types,
     config
 };
