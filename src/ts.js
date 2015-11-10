@@ -1,5 +1,5 @@
-const types = require("./types");
-let options = {
+const {createType, types} = require("./types");
+const options = {
     throwError: true
 };
 
@@ -27,17 +27,9 @@ function check(...params) {
     return errors.length > 0 ? errors : null;
 }
 
-function type(name, checks) {
-    types[name] = (params = {}, m, t) => {
-        for (let key in checks) {
-            checks[key](params[key], m, t);
-        };
-    };
-    return types[name];
-}
-
-const ts = {
-    check, type, types, config
+module.exports = {
+    check,
+    type: createType,
+    types,
+    config
 };
-
-module.exports = ts;
