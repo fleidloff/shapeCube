@@ -1,6 +1,7 @@
-var preconditions = require("preconditions").singleton();
+const preconditions = require("preconditions").singleton();
+const { orNull, addOrNullFunctions, buildOrNullFunction } = require("./orNull");
 
-var types = {
+const types = {
     Any(p, m) {
         preconditions.shouldBeDefined(p, m);
     },
@@ -16,11 +17,28 @@ var types = {
     }
 };
 
-const standardTypes = ["String", "Number", "Boolean", "Function", "Date", "Object", "Array"];
-standardTypes.forEach(type => {
-    types[type] = (p, m) => {
-        preconditions[`shouldBe${type}`](p, m);
-    }
-});
+addOrNullFunctions(types);
 
-module.exports = types;
+function createType(name, checks) {
+    types[name] = (params = {}, m, t) => {
+        for (let key in checks) {
+            checks[key](params[key], m, t);
+        };
+    };
+    buildOrNullFunction(types, name);
+    return types[name];
+}
+
+function addStandardTypes() {
+    const standardTypes = ["String", "Number", "Boolean", "Function", "Date", "Object", "Array", "NonEmptyArray"];
+    standardTypes.forEach(type => {
+        types[type] = (p, m) => {
+            preconditions[`shouldBe${type}`](p, m);
+            buildOrNullFunction(types, type);
+        }
+    });
+}
+
+addStandardTypes();
+
+module.exports = { types, createType };
