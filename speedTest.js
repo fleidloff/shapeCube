@@ -4,7 +4,9 @@ var preconditions = require("preconditions").singleton();
 // Function #3: 11016ms
 
 
-const ts = require("./src/ts");
+var ts = require("./dist/ts");
+
+console.log(ts);
 
 var iterations = 1000000;
 console.time('init');

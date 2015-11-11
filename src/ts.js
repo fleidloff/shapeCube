@@ -1,4 +1,4 @@
-const {createType, types} = require("./types");
+import {createType, types} from "./types";
 const options = {
     throwError: true
 };
