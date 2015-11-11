@@ -6,7 +6,7 @@ var preconditions = require("preconditions").singleton();
 
 const ts = require("./src/ts");
 
-var iterations = 10000000;
+var iterations = 1000000;
 console.time('init');
 console.timeEnd('init');
 
