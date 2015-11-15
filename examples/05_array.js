@@ -1,4 +1,4 @@
-const ts = require("../" + require("../package.json").main);
+const ts = require("../src/ts");
 
 function checkArray(a) {
     ts.check({Array: a});

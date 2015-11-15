@@ -1,4 +1,4 @@
-const ts = require("../" + require("../package.json").main);
+const ts = require("../src/ts");
 
 var newType = ts.createType("newType", {a: ts.types.Number, b: ts.types.Number});
 function checkType(a) {

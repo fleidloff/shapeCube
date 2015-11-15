@@ -1,4 +1,4 @@
-const ts = require("../" + require("../package.json").main);
+const ts = require("../src/ts");
 
 function checkTypedArray(a) {
     ts.check({TypedArray: a, type: ts.types.Number});

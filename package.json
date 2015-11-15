@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/src/ts.js",
   "scripts": {
-    "example": "node examples/$EXAMPLE",
+    "start": "node dist/examples/runner.js",
     "test": "node dist/speedTest.js"
   },
   "author": "Frederik Leidloff <ts@frederik-leidloff.de>",
@@ -19,6 +19,7 @@
     "grunt": "^0.4.5",
     "grunt-babel": "^6.0.0",
     "grunt-contrib-clean": "^0.7.0",
+    "grunt-contrib-watch": "^0.6.1",
     "load-grunt-tasks": "^3.3.0"
   }
 }

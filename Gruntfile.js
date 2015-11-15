@@ -3,9 +3,10 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         babel: require("./grunt-tasks/babel"),
-        clean: require("./grunt-tasks/clean")
+        clean: require("./grunt-tasks/clean"),
+        watch: require("./grunt-tasks/watch")
     });
 
-    grunt.registerTask("dev", ["clean", "babel"]);
-    grunt.registerTask("default", ["dev"]);
+    grunt.registerTask("dev", ["babel"]);
+    grunt.registerTask("default", ["clean", "dev", "watch"]);
 };

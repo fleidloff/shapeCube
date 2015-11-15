@@ -1,7 +1,7 @@
-const ts = require("../" + require("../package.json").main);
+const ts = require("../src/ts");
 
 ts.config({
-    throwError: true
+    throwError: false
 });
 
 function bar(a, b) {

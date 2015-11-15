@@ -1,4 +1,4 @@
-const ts = require("../" + require("../package.json").main);
+const ts = require("../src/ts");
 
 function foo({a, b, c, d, e=4, f}) {
     ts.check({Number: a}, {Number: b, message: "b must be Number"}, {Number: c}, {Any: d}, {Boolean: f});
