@@ -27,7 +27,7 @@ function check(...params) {
     return errors.length > 0 ? errors : null;
 }
 
-module.exports = {
+export {
     check,
     createType,
     types,

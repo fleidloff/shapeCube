@@ -42,4 +42,4 @@ function addStandardTypes() {
 
 addStandardTypes();
 
-module.exports = { types, createType };
+export { types, createType };

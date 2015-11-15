@@ -2,9 +2,10 @@ module.exports = function(grunt) {
     require("load-grunt-tasks")(grunt);
 
     grunt.initConfig({
-        webpack: require("./grunt-tasks/webpack")
+        babel: require("./grunt-tasks/babel"),
+        clean: require("./grunt-tasks/clean")
     });
 
-    grunt.registerTask("dev", ["webpack"]);
+    grunt.registerTask("dev", ["clean", "babel"]);
     grunt.registerTask("default", ["dev"]);
 };

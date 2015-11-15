@@ -28,3 +28,5 @@ node_modules
 
 .idea
 atlassian-ide-plugin.xml
+
+dist
