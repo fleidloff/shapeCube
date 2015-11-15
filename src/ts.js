@@ -1,4 +1,4 @@
-const {createType, types} = require("./types");
+import {createType, types} from "./types";
 const options = {
     throwError: true
 };
@@ -27,7 +27,7 @@ function check(...params) {
     return errors.length > 0 ? errors : null;
 }
 
-module.exports = {
+export {
     check,
     createType,
     types,

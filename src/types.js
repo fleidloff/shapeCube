@@ -1,5 +1,6 @@
-const preconditions = require("preconditions").singleton();
-const { orNull, addOrNullFunctions, buildOrNullFunction } = require("./orNull");
+import _preconditions from "preconditions";
+const preconditions = _preconditions.singleton();
+import { orNull, addOrNullFunctions, buildOrNullFunction } from "./orNull";
 
 const types = {
     Any(p, m) {
@@ -41,4 +42,4 @@ function addStandardTypes() {
 
 addStandardTypes();
 
-module.exports = { types, createType };
+export { types, createType };

@@ -1,4 +1,4 @@
-const ts = require("../" + require("../package.json").main);
+const ts = require("../src/ts");
 
 function check(a) {
     ts.check({Check: (a >=0 && a < 10)});

@@ -18,4 +18,4 @@ function addOrNullFunctions(types) {
     });
 }
 
-module.exports = { orNull, buildOrNullFunction, addOrNullFunctions };
+export { orNull, buildOrNullFunction, addOrNullFunctions };
