@@ -21,6 +21,9 @@ const types = {
 addOrNullFunctions(types);
 
 function createType(name, checks) {
+    if (name === "message" || name === "type") {
+        throw new Error(`type "${name}" cannot be created because the name is reserved.`);
+    }
     types[name] = (params = {}, m, t) => {
         for (let key in checks) {
             checks[key](params[key], m, t);
