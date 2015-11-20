@@ -1,20 +1,31 @@
-import _preconditions from "preconditions";
-const preconditions = _preconditions.singleton();
+import _ from "lodash";
 import { orNull, addOrNullFunctions, buildOrNullFunction } from "./orNull";
 
 const types = {
     Any(p, m) {
-        preconditions.shouldBeDefined(p, m);
+        return !_.isUndefined(p);
     },
     Check(a, m) {
-        preconditions.checkArgument(a, m);
+        return !!a;
+    },
+    NonEmptyArray(p, m) {
+        return _.isArray(p) && p.length > 0;
     },
     TypedArray(p, m, type) {
-        preconditions.shouldBeArray(p, m);
-        preconditions.shouldBeFunction(type, "TypeArray requires a type param.");
+        if (!_.isArray(p)) {
+            return false;
+        }
+        if (!_.isFunction(type)) {
+            return false;
+        }
+        let result = true;
         p.forEach(it => {
-            type(it);
+            if (!type(it)) {
+                result = false;
+            }
         });
+
+        return result;
     }
 };
 
@@ -34,12 +45,12 @@ function createType(name, checks) {
 }
 
 function addStandardTypes() {
-    const standardTypes = ["String", "Number", "Boolean", "Function", "Date", "Object", "Array", "NonEmptyArray"];
+    const standardTypes = ["String", "Number", "Boolean", "Function", "Date", "Object", "Array"];
     standardTypes.forEach(type => {
         types[type] = (p, m) => {
-            preconditions[`shouldBe${type}`](p, m);
-            buildOrNullFunction(types, type);
+            return _[`is${type}`](p);
         }
+        buildOrNullFunction(types, type);
     });
 }
 

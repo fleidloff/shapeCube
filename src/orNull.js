@@ -1,7 +1,7 @@
 function orNull(cb) {
     return (p, ...rest) => {
         if (p === null) {
-            return;
+            return true;
         }
         return cb(p, ...rest);
     }

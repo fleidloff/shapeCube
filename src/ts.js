@@ -14,9 +14,9 @@ function check(...params) {
             if (typeof types[key] !== "function") {
                 return;
             }
-            try {
-                types[key](param[key], param.message, param.type);
-            } catch (e) {
+            if (!types[key](param[key], param.message, param.type)) {
+                // todo: better message here
+                const e = new TypeError("type error" + types[key] + key + param[key]);
                 if (options.throwError) {
                     throw e;
                 }
