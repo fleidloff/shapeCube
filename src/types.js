@@ -37,8 +37,11 @@ function createType(name, checks) {
     }
     types[name] = (params = {}, m, t) => {
         for (let key in checks) {
-            checks[key](params[key], m, t);
-        };
+            if (!checks[key](params[key], m, t)) {
+                return false;
+            }
+        }
+        return true;
     };
     buildOrNullFunction(types, name);
     return types[name];

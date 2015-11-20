@@ -16,7 +16,7 @@ function check(...params) {
             }
             if (!types[key](param[key], param.message, param.type)) {
                 // todo: better message here
-                const e = new TypeError("type error" + types[key] + key + param[key]);
+                const e = new TypeError("type error");
                 if (options.throwError) {
                     throw e;
                 }
