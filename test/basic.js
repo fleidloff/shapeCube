@@ -1,7 +1,7 @@
 import assert from "assert";
 import chai from "chai";
 chai.should();
-const ts = require("../dist/src/ts");
+const ts = require("../util/requireUnique")("../dist/src/ts");
 
 describe("Basics", () => {
     describe("ts.check()", () => {

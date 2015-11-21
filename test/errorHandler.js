@@ -4,7 +4,8 @@ chai.should();
 const spies = require("chai-spies");
 
 chai.use(spies);
-const ts = require("../dist/src/ts");
+
+const ts = require("../util/requireUnique")("../dist/src/ts");
 
 describe("ErrorHandler", () => {
     describe("ts.check()", () => {
@@ -43,14 +44,6 @@ describe("ErrorHandler", () => {
 
             chai.expect(spy).to.not.have.been.called();
 
-        });
-
-        // reset error handler
-        // todo: make new instances of modules for each test
-        ts.config({
-            errorHandler: error => {
-                throw error;
-            }
         });
     });
 });
