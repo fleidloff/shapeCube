@@ -1,6 +1,6 @@
 {
   "name": "ts",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "dist/src/ts.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "Frederik Leidloff <ts@frederik-leidloff.de>",
   "license": "ISC",
   "dependencies": {
-    "preconditions": "^1.0.8"
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "babel-core": "^6.1.4",

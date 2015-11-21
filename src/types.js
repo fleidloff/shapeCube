@@ -1,45 +1,68 @@
-import _preconditions from "preconditions";
-const preconditions = _preconditions.singleton();
+import _ from "lodash";
 import { orNull, addOrNullFunctions, buildOrNullFunction } from "./orNull";
 
 const types = {
-    Any(p, m) {
-        preconditions.shouldBeDefined(p, m);
+    Any(p) {
+        if (_.isUndefined(p)) {
+            return "Variable must be defined";
+        }
+        return true;
     },
-    Check(a, m) {
-        preconditions.checkArgument(a, m);
+    Check(a) {
+        return !!a ? true : "Check must be valid";
     },
-    TypedArray(p, m, type) {
-        preconditions.shouldBeArray(p, m);
-        preconditions.shouldBeFunction(type, "TypeArray requires a type param.");
+    NonEmptyArray(p) {
+        if (!_.isArray(p)) {
+            return "NonEmptyArray must be Array";
+        }
+        if (p.length == 0) {
+            return "NonEmptyArray must not be empty";
+        }
+        return true;
+    },
+    TypedArray(p, type) {
+        if (!_.isArray(p)) {
+            return "TypedArray must be Array";
+        }
+        if (!_.isFunction(type)) {
+            return "TypedArray requires a type parameter";
+        }
+        let result = true;
         p.forEach(it => {
-            type(it);
+            if (!type(it)) {
+                result = "TypedArray contains element(s) of wrong type";
+            }
         });
+
+        return result;
     }
 };
 
 addOrNullFunctions(types);
 
-function createType(name, checks) {
+function createType(name, checks, message) {
     if (name === "message" || name === "type") {
         throw new Error(`type "${name}" cannot be created because the name is reserved.`);
     }
-    types[name] = (params = {}, m, t) => {
+    types[name] = (params = {}, t) => {
         for (let key in checks) {
-            checks[key](params[key], m, t);
-        };
+            if (checks[key](params[key], t) !== true) {
+                return message || "Custom type error";
+            }
+        }
+        return true;
     };
     buildOrNullFunction(types, name);
     return types[name];
 }
 
 function addStandardTypes() {
-    const standardTypes = ["String", "Number", "Boolean", "Function", "Date", "Object", "Array", "NonEmptyArray"];
+    const standardTypes = ["String", "Number", "Boolean", "Function", "Date", "Object", "Array"];
     standardTypes.forEach(type => {
-        types[type] = (p, m) => {
-            preconditions[`shouldBe${type}`](p, m);
-            buildOrNullFunction(types, type);
+        types[type] = p => {
+            return _[`is${type}`](p) ? true : `Variable must be ${type}`;
         }
+        buildOrNullFunction(types, type);
     });
 }
 

@@ -14,9 +14,10 @@ function check(...params) {
             if (typeof types[key] !== "function") {
                 return;
             }
-            try {
-                types[key](param[key], param.message, param.type);
-            } catch (e) {
+            const defaultMessage = types[key](param[key], param.type)
+            if (defaultMessage !== true) {
+                // todo: better message here
+                const e = new TypeError(param.message || defaultMessage);
                 if (options.throwError) {
                     throw e;
                 }

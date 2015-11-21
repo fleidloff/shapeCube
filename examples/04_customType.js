@@ -1,6 +1,6 @@
 const ts = require("../src/ts");
 
-var newType = ts.createType("newType", {a: ts.types.Number, b: ts.types.Number});
+var newType = ts.createType("newType", {a: ts.types.Number, b: ts.types.Number}, "newType consists of only numbers");
 // var newType = ts.createType("message", {a: ts.types.Number, b: ts.types.Number}); -> this is forbidden because message and type are reserved keywords
 
 function checkType(a) {
