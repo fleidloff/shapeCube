@@ -35,6 +35,12 @@ const types = {
         });
 
         return result;
+    },
+    Number(p) {
+        if (isNaN(p)) {
+            return "Variable is not a number";
+        }
+        return standardTypeCheckFunction("Number")(p);
     }
 };
 
@@ -56,12 +62,16 @@ function createType(name, checks, message) {
     return types[name];
 }
 
+function standardTypeCheckFunction(type) {
+    return p => {
+        return _[`is${type}`](p) ? true : `Variable must be ${type}`;
+    }
+}
+
 function addStandardTypes() {
-    const standardTypes = ["String", "Number", "Boolean", "Function", "Date", "Object", "Array"];
+    const standardTypes = ["String", "Boolean", "Function", "Date", "Object", "Array"];
     standardTypes.forEach(type => {
-        types[type] = p => {
-            return _[`is${type}`](p) ? true : `Variable must be ${type}`;
-        }
+        types[type] = standardTypeCheckFunction(type);
         buildOrNullFunction(types, type);
     });
 }
