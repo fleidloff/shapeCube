@@ -7,8 +7,17 @@ module.exports = {
         files: [{
             expand: true,
             cwd: "./",
-            src: ["src/**/*.js", "examples/**/*.js", "speedTest.js"],
+            src: ["src/**/*.js", "examples/**/*.js"],
             dest: "dist",
+            ext: ".js"
+        }]
+    },
+    test: {
+        files: [{
+            expand: true,
+            cwd: "./test",
+            src: ["**/*.js"],
+            dest: "test-dist",
             ext: ".js"
         }]
     }

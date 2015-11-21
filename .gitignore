@@ -30,3 +30,4 @@ node_modules
 atlassian-ide-plugin.xml
 
 dist
+test-dist
