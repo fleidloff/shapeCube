@@ -48,6 +48,26 @@ const a = {a: 1, b: "2"};
 shapecube.check({newType: a}); // throws "newType consists of only numbers"
 ```
 
+```javascript
+shapecube.createType("t", {
+    a: shapecube.types.Number,
+    b: shapecube.createType("b", {
+        c: shapecube.types.String,
+        t: shapecube.types.Array
+    })
+}, "newType consists of only numbers");
+
+shapecube.check({
+    t: {
+        a: 1,
+        b: {
+            c:"2",
+            t:["2"]
+        }
+    }
+});
+```
+
 ## supported types
 [ 'Any',
   'AnyOrNull',
