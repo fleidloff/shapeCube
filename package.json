@@ -4,7 +4,6 @@
   "description": "",
   "main": "dist/src/ts.js",
   "scripts": {
-    "start": "node dist/examples/runner.js",
     "test": "grunt test && mocha test-dist"
   },
   "author": "Frederik Leidloff <ts@frederik-leidloff.de>",
