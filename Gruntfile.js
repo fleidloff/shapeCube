@@ -7,7 +7,7 @@ module.exports = function(grunt) {
         watch: require("./grunt-tasks/watch")
     });
 
-    grunt.registerTask("dev", ["clean:dist", "babel:dist"]);
-    grunt.registerTask("test", ["dev", "clean:test", "babel:test"]);
-    grunt.registerTask("default", ["dev", "watch"]);
+    grunt.registerTask("build", ["clean:dist", "babel:dist"]);
+    grunt.registerTask("test", ["build", "clean:test", "babel:test"]);
+    grunt.registerTask("default", ["build", "watch"]);
 };

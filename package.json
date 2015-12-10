@@ -1,13 +1,14 @@
 {
-  "name": "ts",
-  "version": "1.1.0",
+  "name": "shapeCube",
+  "version": "0.1.0",
   "description": "",
-  "main": "dist/src/ts.js",
+  "main": "dist/shapeCube.js",
   "scripts": {
-    "test": "grunt test && mocha test-dist"
+    "test": "grunt test && mocha test-dist",
+    "build": "grunt build"
   },
-  "author": "Frederik Leidloff <ts@frederik-leidloff.de>",
-  "license": "ISC",
+  "author": "Frederik Leidloff <kontakt@frederik-leidloff.de>",
+  "license": "MIT",
   "dependencies": {
     "lodash": "^3.10.1"
   },

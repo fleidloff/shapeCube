@@ -1,14 +1,14 @@
 import assert from "assert";
 import chai from "chai";
 chai.should();
-const ts = require("../util/requireUnique")("../dist/src/ts");
+const shapeCube = require("../util/requireUnique")("../dist/shapeCube");
 
 describe("Advanced", () => {
-    describe("ts.check()", () => {
+    describe("shapeCube.check()", () => {
 
         it("should throw an error because NaN is not a number", () => {
             (() => {
-                ts.check({Number: NaN});
+                shapeCube.check({Number: NaN});
             }).should.throw("Variable is not a number");
         });
 
