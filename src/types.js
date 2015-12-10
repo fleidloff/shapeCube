@@ -29,7 +29,7 @@ const types = {
         }
         let result = true;
         p.forEach(it => {
-            if (!type(it)) {
+            if (type(it) !== true) {
                 result = "TypedArray contains element(s) of wrong type";
             }
         });
