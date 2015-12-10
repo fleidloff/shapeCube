@@ -5,10 +5,10 @@ const spies = require("chai-spies");
 
 chai.use(spies);
 
-const shapeCube = require("../util/requireUnique")("../dist/shapeCube");
+const shapecube = require("../util/requireUnique")("../dist/shapecube");
 
 describe("ErrorHandler", () => {
-    describe("shapeCube.check()", () => {
+    describe("shapecube.check()", () => {
 
         it("error handler should be called with error", () => {
             const errorHandler = function errorHandler(e) {
@@ -17,12 +17,12 @@ describe("ErrorHandler", () => {
 
             const spy = chai.spy(errorHandler);
 
-            shapeCube.config({
+            shapecube.config({
                 errorHandler: spy
             });
 
             (() => {
-                shapeCube.check({Number: "1"});
+                shapecube.check({Number: "1"});
                 chai.expect(spy).to.have.been.called();
 
             }).should.not.throw();
@@ -36,11 +36,11 @@ describe("ErrorHandler", () => {
 
             const spy = chai.spy(errorHandler);
 
-            shapeCube.config({
+            shapecube.config({
                 errorHandler: spy
             });
 
-            shapeCube.check({Number: 1});
+            shapecube.check({Number: 1});
 
             chai.expect(spy).to.not.have.been.called();
 

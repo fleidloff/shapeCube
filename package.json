@@ -1,8 +1,8 @@
 {
-  "name": "shapeCube",
-  "version": "0.1.0",
+  "name": "shapecube",
+  "version": "0.1.1",
   "description": "",
-  "main": "dist/shapeCube.js",
+  "main": "dist/shapecube.js",
   "scripts": {
     "test": "grunt test && mocha test-dist",
     "build": "grunt build"

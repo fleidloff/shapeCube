@@ -1,14 +1,14 @@
 import assert from "assert";
 import chai from "chai";
 chai.should();
-const shapeCube = require("../util/requireUnique")("../dist/shapeCube");
+const shapecube = require("../util/requireUnique")("../dist/shapecube");
 
 describe("Messages", () => {
-    describe("shapeCube.check()", () => {
+    describe("shapecube.check()", () => {
 
         it("should throw a specific message when message is defined", () => {
             (() => {
-                shapeCube.check({String: 1, message: "custom message"});
+                shapecube.check({String: 1, message: "custom message"});
             }).should.throw("custom message");
         });
 
