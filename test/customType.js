@@ -22,6 +22,14 @@ describe("Custom Type", () => {
             }).should.not.throw();
         });
 
+        it("should not throw an error when custom type is defined with strings", () => {
+            shapecube.createType("stringType", {a: "Number", b: "Number"});
+            (() => {
+                const a = {a: 1, b: 2};
+                shapecube.check({stringType: a});
+            }).should.not.throw();
+        });
+
         it("should throw an error when custom type is named message", () => {
             (() => {
                 shapecube.createType("message", {a: shapecube.types.Number, b: shapecube.types.Number}, "message is reserved");
@@ -30,12 +38,12 @@ describe("Custom Type", () => {
             }).should.throw(`type "message" cannot be created because the name is reserved.`);
         });
 
-        it("should throw an error when custom type is named type", () => {
+        it("should not throw an error when custom type is named type", () => {
             (() => {
                 shapecube.createType("type", {a: shapecube.types.Number, b: shapecube.types.Number}, "type is reserved");
                 const a = {a: 1, b: 2};
                 shapecube.check({newType: a});
-            }).should.throw(`type "type" cannot be created because the name is reserved.`);
+            }).should.not.throw();
         });
 
     });

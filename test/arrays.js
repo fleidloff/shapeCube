@@ -24,18 +24,5 @@ describe("Arrays", () => {
             }).should.throw("Variable must be Array");
         });
 
-        it("should not throw an error when parameters in array are of the correct type", () => {
-            (() => {
-                shapecube.check({TypedArray: [1, 2, 3], type: shapecube.types.Number});
-            }).should.not.throw();
-        });
-
-        // todo: fix TypedArray
-        it("should throw an error when parameters in array are not of the correct type", () => {
-            (() => {
-                shapecube.check({TypedArray: [1, "2", 3], type: shapecube.types.Number, message: "error"});
-            }).should.throw("error");
-        });
-
     });
 });

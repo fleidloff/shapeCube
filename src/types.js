@@ -20,22 +20,6 @@ const types = {
         }
         return true;
     },
-    TypedArray(p, type) {
-        if (!_.isArray(p)) {
-            return "TypedArray must be Array";
-        }
-        if (!_.isFunction(type)) {
-            return "TypedArray requires a type parameter";
-        }
-        let result = true;
-        p.forEach(it => {
-            if (type(it) !== true) {
-                result = "TypedArray contains element(s) of wrong type";
-            }
-        });
-
-        return result;
-    },
     Number(p) {
         if (isNaN(p)) {
             return "Variable is not a number";
@@ -47,11 +31,14 @@ const types = {
 addOrNullFunctions(types);
 
 function createType(name, checks, message) {
-    if (name === "message" || name === "type") {
+    if (name === "message") {
         throw new Error(`type "${name}" cannot be created because the name is reserved.`);
     }
     types[name] = (params = {}, t) => {
         for (let key in checks) {
+            if (_.isString(checks[key])) {
+                checks[key] = types[checks[key]];
+            }
             if (checks[key](params[key], t) !== true) {
                 return message || "Custom type error";
             }

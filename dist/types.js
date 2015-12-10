@@ -32,22 +32,6 @@ var types = {
         }
         return true;
     },
-    TypedArray: function TypedArray(p, type) {
-        if (!_lodash2.default.isArray(p)) {
-            return "TypedArray must be Array";
-        }
-        if (!_lodash2.default.isFunction(type)) {
-            return "TypedArray requires a type parameter";
-        }
-        var result = true;
-        p.forEach(function (it) {
-            if (type(it) !== true) {
-                result = "TypedArray contains element(s) of wrong type";
-            }
-        });
-
-        return result;
-    },
     Number: function Number(p) {
         if (isNaN(p)) {
             return "Variable is not a number";
@@ -59,7 +43,7 @@ var types = {
 (0, _orNull.addOrNullFunctions)(types);
 
 function createType(name, checks, message) {
-    if (name === "message" || name === "type") {
+    if (name === "message") {
         throw new Error("type \"" + name + "\" cannot be created because the name is reserved.");
     }
     types[name] = function () {
@@ -67,6 +51,9 @@ function createType(name, checks, message) {
         var t = arguments[1];
 
         for (var key in checks) {
+            if (_lodash2.default.isString(checks[key])) {
+                checks[key] = types[checks[key]];
+            }
             if (checks[key](params[key], t) !== true) {
                 return message || "Custom type error";
             }

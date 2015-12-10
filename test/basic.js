@@ -18,6 +18,12 @@ describe("Basics", () => {
             }).should.throw("Variable must be String");
         });
 
+        it("should throw an error when type is unknown", () => {
+            (() => {
+                shapecube.check({UNKNOWN: 1});
+            }).should.throw("type UNKNOWN is not defined");
+        });
+
         it("should throw an error when variable is not defined", () => {
             (() => {
                 shapecube.check({Any: undefined});
