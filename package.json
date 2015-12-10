@@ -9,6 +9,10 @@
   },
   "author": "Frederik Leidloff <kontakt@frederik-leidloff.de>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fleidloff/shapecube.git"
+  },
   "dependencies": {
     "lodash": "^3.10.1"
   },
