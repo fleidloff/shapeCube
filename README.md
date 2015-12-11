@@ -1,6 +1,9 @@
 # shapecube
 add type checks to your javascript functions.
 
+## try it out!
+[shapecube on tonicdev](https://tonicdev.com/npm/shapecube)
+
 ## how to build and test
 `npm test` runs all tests. The tests are also a good starting point to look for examples.
 
@@ -23,8 +26,12 @@ function add(a, b) {
 
 ```javascript
 shapecube.check({Number: 1});
-shapecube.check({Number: "1"}); // throws an error
-shapecube.check({Number: "1", message: "custom error message"}); // throws an error with a custom error message
+
+// throws an error
+shapecube.check({Number: "1"}); 
+
+ // throws an error with a custom error message
+shapecube.check({Number: "1", message: "custom error message"});
 ```
 ### error handler
 
@@ -35,21 +42,30 @@ shapecube.config({
     }
 });
 
-shapecube.check({Number: "1"}); // logs error to console instead of throwing it
+// logs error to console instead of throwing it
+shapecube.check({Number: "1"}); 
 
 ```
 
 ### custom types
 
 ```javascript
-var newType = shapecube.createType("newType", {a: shapecube.types.Number, b: shapecube.types.Number}, "newType consists of only numbers");
+var newType = shapecube.createType("newType", {
+    a: shapecube.types.Number, 
+    b: shapecube.types.Number
+}, "newType consists of only numbers");
 
-const a = {a: 1, b: "2"};
-shapecube.check({newType: a}); // throws "newType consists of only numbers"
+// throws "newType consists of only numbers"
+shapecube.check({
+    newType: {
+        a: 1, 
+        b: "2"
+    }
+}); 
 ```
 
 ```javascript
-shapecube.createType("t", {
+shapecube.createType("complexType", {
     a: "Number",
     b: {
         c: "String",
@@ -58,7 +74,7 @@ shapecube.createType("t", {
 });
 
 shapecube.check({
-    t: {
+    complexType: {
         a: 1,
         b: {
             c:"2",
