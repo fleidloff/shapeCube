@@ -1,6 +1,6 @@
 {
   "name": "shapecube",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "main": "dist/shapecube.js",
   "scripts": {
@@ -28,5 +28,6 @@
     "grunt-contrib-watch": "^0.6.1",
     "load-grunt-tasks": "^3.3.0",
     "mocha": "^2.3.4"
-  }
+  },
+  "tonicExampleFilename": "example.js"
 }
