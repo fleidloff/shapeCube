@@ -51,11 +51,11 @@ shapecube.check({newType: a}); // throws "newType consists of only numbers"
 ```javascript
 shapecube.createType("t", {
     a: "Number",
-    b: shapecube.createType("b", {
+    b: {
         c: "String",
         t: "Array"
     })
-}, "newType consists of only numbers");
+});
 
 shapecube.check({
     t: {
