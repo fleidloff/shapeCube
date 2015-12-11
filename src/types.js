@@ -40,18 +40,20 @@ function createType(name, checks, message) {
 }
 
 function buildType(checks, message) {
+    for (let key in checks) {
+        // todo: isObject returns true for functions?
+        if (_.isObject(checks[key]) && !(_.isFunction(checks[key]))) {
+            checks[key] = buildType(checks[key], message);
+        }
+        if (_.isString(checks[key])) {
+            checks[key] = types[checks[key]];
+        }
+        if (!(_.isFunction(checks[key]))) {
+            throw new Error("type is unknown");
+        }
+    }
     return (params = {}, t) => {
         for (let key in checks) {
-            // todo: isObject returns true for functions?
-            if (_.isObject(checks[key]) && !(_.isFunction(checks[key]))) {
-                checks[key] = buildType(checks[key], message);
-            }
-            if (_.isString(checks[key])) {
-                checks[key] = types[checks[key]];
-            }
-            if (!(_.isFunction(checks[key]))) {
-                return "type does not exist";
-            }
             if (checks[key](params[key], t) !== true) {
                 return message || "Custom type error";
             }

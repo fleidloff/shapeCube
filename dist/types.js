@@ -52,21 +52,23 @@ function createType(name, checks, message) {
 }
 
 function buildType(checks, message) {
+    for (var key in checks) {
+        // todo: isObject returns true for functions?
+        if (_lodash2.default.isObject(checks[key]) && !_lodash2.default.isFunction(checks[key])) {
+            checks[key] = buildType(checks[key], message);
+        }
+        if (_lodash2.default.isString(checks[key])) {
+            checks[key] = types[checks[key]];
+        }
+        if (!_lodash2.default.isFunction(checks[key])) {
+            throw new Error("type is unknown");
+        }
+    }
     return function () {
         var params = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
         var t = arguments[1];
 
         for (var key in checks) {
-            // todo: isObject returns true for functions?
-            if (_lodash2.default.isObject(checks[key]) && !_lodash2.default.isFunction(checks[key])) {
-                checks[key] = buildType(checks[key], message);
-            }
-            if (_lodash2.default.isString(checks[key])) {
-                checks[key] = types[checks[key]];
-            }
-            if (!_lodash2.default.isFunction(checks[key])) {
-                return "type does not exist";
-            }
             if (checks[key](params[key], t) !== true) {
                 return message || "Custom type error";
             }

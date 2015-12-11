@@ -47,11 +47,10 @@ describe("Custom Type", () => {
         });
 
 
-        it("should throw an error when custom type consists of unknown types", () => {
+        it("should throw an error when custom type consists of unknown types while creating the type", () => {
             (() => {
                 shapecube.createType("unknown", {a: "foo"});
-                shapecube.check({unknown: 1});
-            }).should.throw("type does not exist");
+            }).should.throw("type is unknown");
         });
 
         it("should not throw an error when custom type is complex", () => {
