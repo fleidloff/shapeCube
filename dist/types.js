@@ -46,13 +46,26 @@ function createType(name, checks, message) {
     if (name === "message") {
         throw new Error("type \"" + name + "\" cannot be created because the name is reserved.");
     }
-    types[name] = function () {
+    types[name] = buildType(checks, message);
+    (0, _orNull.buildOrNullFunction)(types, name);
+    return types[name];
+}
+
+function buildType(checks, message) {
+    return function () {
         var params = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
         var t = arguments[1];
 
         for (var key in checks) {
+            // todo: isObject returns true for functions?
+            if (_lodash2.default.isObject(checks[key]) && !_lodash2.default.isFunction(checks[key])) {
+                checks[key] = buildType(checks[key], message);
+            }
             if (_lodash2.default.isString(checks[key])) {
                 checks[key] = types[checks[key]];
+            }
+            if (!_lodash2.default.isFunction(checks[key])) {
+                return "type does not exist";
             }
             if (checks[key](params[key], t) !== true) {
                 return message || "Custom type error";
@@ -60,8 +73,6 @@ function createType(name, checks, message) {
         }
         return true;
     };
-    (0, _orNull.buildOrNullFunction)(types, name);
-    return types[name];
 }
 
 function standardTypeCheckFunction(type) {

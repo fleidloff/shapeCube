@@ -46,5 +46,37 @@ describe("Custom Type", () => {
             }).should.not.throw();
         });
 
+
+        it("should throw an error when custom type consists of unknown types", () => {
+            (() => {
+                shapecube.createType("unknown", {a: "foo"});
+                shapecube.check({unknown: 1});
+            }).should.throw("type does not exist");
+        });
+
+        it("should not throw an error when custom type is complex", () => {
+            (() => {
+                var newType = shapecube.createType("complex", {a: {b: "Number", c: "Number"}});
+                shapecube.check({complex: {
+                    a: {
+                        b: 1,
+                        c: 1
+                    }
+                }});
+            }).should.not.throw();
+        });
+
+        it("should throw an error when custom type is complex and check is invalid", () => {
+            (() => {
+                var newType = shapecube.createType("complexInvalid", {a: {b: "Number", c: "Number"}}, "complex invalid");
+                shapecube.check({complexInvalid: {
+                    a: {
+                        b: 1,
+                        c: "1"
+                    }
+                }});
+            }).should.throw("complex invalid");
+        });
+
     });
 });

@@ -34,10 +34,23 @@ function createType(name, checks, message) {
     if (name === "message") {
         throw new Error(`type "${name}" cannot be created because the name is reserved.`);
     }
-    types[name] = (params = {}, t) => {
+    types[name] = buildType(checks, message);
+    buildOrNullFunction(types, name);
+    return types[name];
+}
+
+function buildType(checks, message) {
+    return (params = {}, t) => {
         for (let key in checks) {
+            // todo: isObject returns true for functions?
+            if (_.isObject(checks[key]) && !(_.isFunction(checks[key]))) {
+                checks[key] = buildType(checks[key], message);
+            }
             if (_.isString(checks[key])) {
                 checks[key] = types[checks[key]];
+            }
+            if (!(_.isFunction(checks[key]))) {
+                return "type does not exist";
             }
             if (checks[key](params[key], t) !== true) {
                 return message || "Custom type error";
@@ -45,8 +58,6 @@ function createType(name, checks, message) {
         }
         return true;
     };
-    buildOrNullFunction(types, name);
-    return types[name];
 }
 
 function standardTypeCheckFunction(type) {
