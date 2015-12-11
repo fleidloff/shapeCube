@@ -54,7 +54,7 @@ shapecube.createType("t", {
     b: {
         c: "String",
         t: "Array"
-    })
+    }
 });
 
 shapecube.check({
