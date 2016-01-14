@@ -1,13 +1,19 @@
 # shapecube
 add type checks to your javascript functions.
 
+---
+
 ## try it out!
 [shapecube on tonicdev](https://tonicdev.com/npm/shapecube)
+
+---
 
 ## how to build and test
 `npm test` runs all tests. The tests are also a good starting point to look for examples.
 
 `npm run build` transpiles the es6 files to es5 and runs eslint.
+
+---
 
 ## how to use it
 First run `npm install shapecube` and then include shapecube in your project:
@@ -21,7 +27,12 @@ function add(a, b) {
 }
 ```
 
+---
+
 ## more examples
+
+---
+
 ### basic usage
 
 ```javascript
@@ -33,6 +44,9 @@ shapecube.check({Number: "1"});
  // throws an error with a custom error message
 shapecube.check({Number: "1", message: "custom error message"});
 ```
+
+---
+
 ### error handler
 
 ```javascript
@@ -46,6 +60,8 @@ shapecube.config({
 shapecube.check({Number: "1"}); 
 
 ```
+
+---
 
 ### custom types
 
@@ -63,6 +79,8 @@ shapecube.check({
     }
 }); 
 ```
+
+---
 
 ```javascript
 shapecube.createType("complexType", {
@@ -83,6 +101,8 @@ shapecube.check({
     }
 });
 ```
+
+---
 
 ## supported types
 [ 'Any',
